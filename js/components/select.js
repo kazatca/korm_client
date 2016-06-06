@@ -3,63 +3,91 @@ import React, {Component, PropTypes} from 'react';
 export default class Select extends Component{
 
   static propTypes = {
-    options: PropTypes.object,
-    maxCount: PropTypes.number
+    options: PropTypes.objectOf(
+      PropTypes.shape({
+        name: PropTypes.string
+      })
+    ).isRequired,
+    maxCount: PropTypes.number,
+    onEnter: PropTypes.func.isRequired
   }
 
   state = {
-    value: '',
-    shortList: null
+    shortList: null,
+    cursor: null
   }
 
-  getShortList(){
-    var result = this.filter()
-    if(!result) return null;
-    return result.map(key => 
-      <div 
-        key = {key} 
-        onClick = {() => this.click.bind(this, key)} 
-      >
-      {this.props.options[key]}
-      </div>
-    );
+  constructor(props){
+    props.maxCount = props.maxCount || 50;
+    super(props);
   }
 
-  filter(){
-    var str = this.state.value.toLowerCase().match(/\S+/g);
+  click(key){
+    this.props.onEnter(key, this.props.options[key].name);
+  }
+
+  filter(value){
+    var str = value.toLowerCase().match(/\S+/g);
     var result = [];
-    if(!str){
-      result = Object.keys(this.props.options);
-      if(result.length > this.props.maxCount) return null;
-      return result;
-    }
     for(var key in this.props.options){
-      if(str.every(word => this.props.options[key].name.toLowerCase().indexOf(word)!=-1)){
-        if(str.length == 1 && str[0] == this.props.options[key].toLowerCase()){
+      if(!str || str.every(word => this.props.options[key].name.toLowerCase().indexOf(word)!=-1)){
+        if(str.length == 1 && str[0] == this.props.options[key].name.toLowerCase()){
           result.unshift(key);
         }
         else{
           result.push(key);
         }
+        if(result.length > this.props.maxCount) return null;
       }
     }
     return result;
   }
 
   onChange(e){
-    if (e.target.value == this.state.value) return;
-    this.setState({value: e.target.value});
+    if(e.target.value == this.state.value) return;
+    this.setState({
+      shortList: this.filter(e.target.value), 
+      cursor: null
+    });
+  }
+
+  get(){
+    if(this.state.cursor === null || this.state.shortList === null) return null;
+
+    let key = this.state.shortList[this.state.cursor];
+    let value = this.props.options[key].name;
+    return {key, value};
+  }
+
+  shiftCursor(dir){
+    if(!this.state.shortList) return;
+    let cursor = this.state.cursor;
+    if(cursor === null && dir>0) return this.setState({cursor: 0});
+    cursor += dir;
+    if(cursor<0 || cursor >= this.state.shortList.length) return;
+    this.setState({cursor});
   }
 
   render(){
     return (
       <div className = 'select'>
         <input 
-          value = {this.state.value} 
           onChange = {(e) => this.onChange(e)} 
         />
         <div className = 'select-list'>
-          {this.state.getShortList()}
+          {
+            this.state.shortList !== null?
+            this.state.shortList.map((key, i) => 
+              <div 
+                key = {key} 
+                className = {this.state.cursor === i ? 'select-cursor': ''}
+                onClick = {this.click.bind(this, key)} 
+              >
+              {this.props.options[key]}
+              </div>
+            ):
+            null
+          }
         </div>
       </div>
     );

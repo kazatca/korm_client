@@ -24,7 +24,7 @@ gulp.task("js", function () {
       transform: ["babelify"]
     }))
     
-    .pipe(gulp.dest("../js"));
+    .pipe(gulp.dest("./dist/js"));
 });
 
 
@@ -39,7 +39,7 @@ gulp.task("vendor", function () {
       ]
     }))
     // .pipe(uglify())
-    .pipe(gulp.dest("../js"));
+    .pipe(gulp.dest("./dist/js"));
 });
 
 
@@ -54,7 +54,7 @@ gulp.task('sass', function () {
     }))
     .pipe(plumber())
     .pipe(sass({ importer: moduleImporter() }))
-    .pipe(gulp.dest('../css'));
+    .pipe(gulp.dest('./dist/css'));
 });
 
 gulp.task('default', function(){
