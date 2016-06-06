@@ -1,0 +1,43 @@
+.date-picker-days{
+  width: 100%;
+}
+.date-picker-day{
+  width: 30px;
+  height: 20px;
+  padding:2px 5px;
+  text-align: right;
+  cursor: pointer;
+  display: inline-block;
+  &:hover{
+    @extend .popup-button:hover;
+  }
+}
+
+.date-picker-today{
+  font-weight: bold;
+}
+
+.date-picker-selected{
+  @extend .popup-button:hover;
+}
+
+.slider-value{
+  text-align: center;
+  width: 60px;
+  display: inline-block;
+}
+
+.slider{
+  text-align: center;
+}
+
+.slider-prev, 
+.slider-next{
+  padding: 5px;
+  width: 60px;
+  display: inline-block;
+  cursor: pointer;
+  &:hover{
+    @extend .popup-button:hover;
+  }
+}
