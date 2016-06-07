@@ -9,18 +9,22 @@ export default class InputOption extends Component{
 
   state = {
     popup: false,
-    option: null
+    option: ''
   }
 
   render(){
     return (
       <div>
-        <div onClick = {() => this.setState({popup: true})} >{this.state.option}</div>
+        <input 
+          value = {this.state.option} 
+          onClick = {() => this.setState({popup: true})} 
+        />
         {
           this.state.popup?
           <PopupSelect 
             options = {this.props.options} 
             onEnter = {(key, value) => this.setState({option: value, popup: false})} 
+            onCancel = {() => this.setState({popup: false})}
           />:
           null
         }

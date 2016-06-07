@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import ReactDOM from 'react-dom';
 
 export default class Select extends Component{
 
@@ -10,28 +11,28 @@ export default class Select extends Component{
     ).isRequired,
     maxCount: PropTypes.number,
     onEnter: PropTypes.func.isRequired
-  }
+  };
+
+  static defaultProps = {
+    maxCount: 50
+  };
 
   state = {
     shortList: null,
     cursor: null
-  }
+  };
 
-  constructor(props){
-    props.maxCount = props.maxCount || 50;
-    super(props);
-  }
 
   click(key){
     this.props.onEnter(key, this.props.options[key].name);
   }
 
   filter(value){
-    var str = value.toLowerCase().match(/\S+/g);
+    var str = (value || '').toLowerCase().match(/\S+/g);
     var result = [];
     for(var key in this.props.options){
       if(!str || str.every(word => this.props.options[key].name.toLowerCase().indexOf(word)!=-1)){
-        if(str.length == 1 && str[0] == this.props.options[key].name.toLowerCase()){
+        if(str && str.length == 1 && str[0] == this.props.options[key].name.toLowerCase()){
           result.unshift(key);
         }
         else{
@@ -44,19 +45,23 @@ export default class Select extends Component{
   }
 
   onChange(e){
-    if(e.target.value == this.state.value) return;
+    if(e && e.target.value == this.state.value) return;
     this.setState({
-      shortList: this.filter(e.target.value), 
+      shortList: this.filter(e? e.target.value: ''), 
       cursor: null
     });
   }
 
-  get(){
-    if(this.state.cursor === null || this.state.shortList === null) return null;
+  getKey(){
+    if(this.state.shortList === null) return null;
+    if(this.state.shortList.length == 1) return this.state.shortList[0];
+    if(this.state.cursor !== null) return this.state.shortList[this.state.cursor];
+    return null;
+  }
 
-    let key = this.state.shortList[this.state.cursor];
-    let value = this.props.options[key].name;
-    return {key, value};
+  get(){
+    let key = this.getKey();
+    return {key, value: key? this.props.options[key].name: null};
   }
 
   shiftCursor(dir){
@@ -68,10 +73,16 @@ export default class Select extends Component{
     this.setState({cursor});
   }
 
+  componentDidMount(){
+    this.onChange();
+    ReactDOM.findDOMNode(this.refs.input).focus(); 
+  }
+
   render(){
     return (
       <div className = 'select'>
         <input 
+          ref = 'input'
           onChange = {(e) => this.onChange(e)} 
         />
         <div className = 'select-list'>
@@ -80,10 +91,10 @@ export default class Select extends Component{
             this.state.shortList.map((key, i) => 
               <div 
                 key = {key} 
-                className = {this.state.cursor === i ? 'select-cursor': ''}
+                className = {'select-item' + (this.state.cursor === i ? ' select-cursor': '')}
                 onClick = {this.click.bind(this, key)} 
               >
-              {this.props.options[key]}
+              {this.props.options[key].name}
               </div>
             ):
             null

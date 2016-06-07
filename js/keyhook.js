@@ -67,7 +67,7 @@ class Keyhook{
 
   constructor(handlers){
     this.handlers = handlers;
-    this.active = false;
+    this.active = true;
   }
 
   toggle(value){

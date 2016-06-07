@@ -26,7 +26,6 @@ export default class PopupDatePicker extends Component{
         }
       }
     });
-    this.keyhook.toggle(true);
   }
 
   componentWillUnmount(){

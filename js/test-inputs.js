@@ -7,6 +7,12 @@ import InputOption from './components/input-option.js';
 
 
 class Period extends Component{
+
+  state = {
+    from: null,
+    to: null
+  }
+
   render(){
     return (
       <div>
@@ -22,7 +28,12 @@ class Selection extends Component{
   render(){
     return (
       <InputOption 
-        options = {{1:'Большой', 2:'Маленький', 3:'Дальний'}}
+        title = {'склад'}
+        options = {{
+          1:{name: 'Большой'}, 
+          2:{name: 'Маленький'}, 
+          3:{name: 'Дальний'}
+        }}
       />
     );
   }

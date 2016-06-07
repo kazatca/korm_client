@@ -1,0 +1,18 @@
+.select{
+  input{
+    width: 280px;
+  }
+}
+
+.select-list{}
+
+.select-item{
+  padding: 5px;
+  &:hover{
+    @extend .popup-button:hover
+  }
+}
+
+.select-cursor{
+  @extend .popup-button:hover
+}

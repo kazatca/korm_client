@@ -1,0 +1,17 @@
+mixin page(name, title)
+  doctype html
+  html
+    head
+      meta(http-equiv="content-type", content="text/html; charset=UTF-8")
+      link(rel="shortcut icon", type="image/png", href="/favicon.png")
+      link(rel="stylesheet", type="text/css", href="css/vendor.css")
+      link(rel="stylesheet", type="text/css", href="css/#{name}.css")
+      title
+    body
+      #app
+      block
+      script(type="application/javascript", src="js/vendor.js")
+      script(type="application/javascript", src="js/#{name}.js")
+
+      
+

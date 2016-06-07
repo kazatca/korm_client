@@ -2,6 +2,7 @@ var gulp = require("gulp");
 var browserify = require('gulp-browserify');
 // var uglify = require('gulp-uglify');
 var sass = require('gulp-sass');
+var jade = require('gulp-jade');
 var plumber = require('gulp-plumber');
 var autoprefixer = require('gulp-autoprefixer');
 var moduleImporter = require('sass-module-importer');
@@ -28,20 +29,14 @@ gulp.task("js", function () {
 });
 
 
-gulp.task("vendor", function () {
-  // return file(`${process.cwd()}/vendor.js`, '', {src: true})  //break require links
-  return gulp.src('./js/vendor.js')
+gulp.task('jade', function() {
+  gulp.src(files.map(function(file){
+    return './jade/'+file+'.jade';
+  }))
     .pipe(plumber())
-    .pipe(browserify({
-      require: [
-        'react',
-        'react-dom'
-      ]
-    }))
-    // .pipe(uglify())
-    .pipe(gulp.dest("./dist/js"));
+    .pipe(jade({pretty: true}))
+    .pipe(gulp.dest('./dist/'));
 });
-
 
 
 gulp.task('sass', function () {
@@ -57,17 +52,46 @@ gulp.task('sass', function () {
     .pipe(gulp.dest('./dist/css'));
 });
 
-gulp.task('default', function(){
-  gulp.start('js', 'sass');
+
+gulp.task("vendor:js", function () {
+  // return file(`${process.cwd()}/vendor.js`, '', {src: true})  //break require links
+  return gulp.src('./js/vendor.js')
+    .pipe(plumber())
+    .pipe(browserify({
+      require: [
+        'react',
+        'react-dom'
+      ]
+    }))
+    // .pipe(uglify())
+    .pipe(gulp.dest("./dist/js"));
 });
+
+gulp.task('vendor:scss', function(){
+  gulp.src('./scss/vendor.scss')
+    .pipe(autoprefixer({
+      browsers: ['last 2 versions'],
+      cascade: false
+    }))
+    .pipe(plumber())
+    .pipe(sass({ importer: moduleImporter() }))
+    .pipe(gulp.dest('./dist/css'));
+});
+
+gulp.task('vendor', ['vendor:js', 'vendor:scss']);
+
+gulp.task('default', ['js', 'sass', 'jade']);
 
 
 gulp.task('watch', function(){
   gulp.start('default');
   gulp.watch('./scss/**/*.scss', ['sass']);
+  gulp.watch('./jade/**/*.jade', ['jade']);
   gulp.watch([
       './js/**/*.js', 
       '!**/*tests/**/*'
     ],  
     ['js']);
 });
+
+
