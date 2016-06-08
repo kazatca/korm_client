@@ -1,13 +1,13 @@
 .select{
   input{
-    width: 280px;
+    width: 295px;
   }
 }
 
 .select-list{}
 
 .select-item{
-  padding: 5px;
+  padding: 3px 5px;
   &:hover{
     @extend .popup-button:hover
   }

@@ -1,0 +1,18 @@
+.calculator{
+  input{
+    width: 295px;
+    text-align: right;
+  }
+}
+
+.calculator-result{
+  text-align: right;
+  &:before{
+    content: '='
+  }
+}
+
+.calculator-error{
+  float: left;
+  color: #c02e23;
+}

@@ -22,6 +22,7 @@ export default class InputOption extends Component{
         {
           this.state.popup?
           <PopupSelect 
+            title = {'Склад'}
             options = {this.props.options} 
             onEnter = {(key, value) => this.setState({option: value, popup: false})} 
             onCancel = {() => this.setState({popup: false})}

@@ -1,0 +1,49 @@
+$fontSize: 14px;
+
+body, 
+td,
+div,
+input,
+select,
+a,
+textarea{
+  font-family:sans-serif,arial;
+  font-size: $fontSize;
+}
+body{
+  background:#fff;
+  padding: 10px;
+}
+a{
+  text-decoration:none;
+  color:#000;
+}
+a:hover{
+  text-decoration:none;
+  color:#d0d0d0; 
+}
+table{
+  border-collapse:collapse;
+  border-width:0;
+}
+input, 
+textarea{
+  border-collapse:collapse;
+  border:solid 1px;
+  margin:1px;
+  padding:2px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+} 
+
+
+.spin{
+  animation: spin 2s infinite linear;
+}

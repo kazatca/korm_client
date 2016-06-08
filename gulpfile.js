@@ -9,7 +9,8 @@ var moduleImporter = require('sass-module-importer');
 // var file = require('gulp-file');
 
 var files = [
-  'test-inputs'
+  'test-inputs',
+  'test-notify'
 ];
 
 gulp.task("js", function () {
@@ -43,11 +44,11 @@ gulp.task('sass', function () {
   gulp.src(files.map(function(file){
     return './scss/'+file+'.scss';
   }))
+    .pipe(plumber())
     .pipe(autoprefixer({
       browsers: ['last 2 versions'],
       cascade: false
     }))
-    .pipe(plumber())
     .pipe(sass({ importer: moduleImporter() }))
     .pipe(gulp.dest('./dist/css'));
 });
