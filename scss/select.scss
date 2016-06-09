@@ -8,11 +8,12 @@
 
 .select-item{
   padding: 3px 5px;
+  cursor: pointer;
   &:hover{
-    @extend .popup-button:hover
+    background: rgba(0, 0, 0, 0.1);
   }
 }
 
 .select-cursor{
-  @extend .popup-button:hover
+  background: rgba(0, 0, 0, 0.2);
 }

@@ -1,0 +1,82 @@
+@import 'calculator';
+@import 'text';
+@import 'date-picker';
+@import 'select';
+
+.wizard{
+  padding:10px;
+  width: 415px;
+  margin-left: -208px;
+  margin-top: -100px;
+  position:fixed;
+  background:#efef90;
+  top:50%;
+  left:50%;
+  z-index:10;
+  user-select:none;
+
+}
+
+.wizard-title {
+  padding: 0px;
+  margin: 0px;
+}
+.wizard-step-title{
+  float: right;
+}
+
+.wizard-history,
+.wizard-input{
+  display: inline-block;
+  height: 200px;  
+  vertical-align: top;
+}
+
+.wizard-history{
+  margin: 5px;
+  padding: 0px;
+  border-right: 1px solid gray;
+  width: 100px;
+}
+
+.wizard-history-title,.wizard-history-value{
+  padding: 0px;
+  margin: 0px;
+  padding-top: 4px;
+}
+.wizard-history-title{
+  color: gray;
+  font-size: smaller; 
+}
+.wizard-history-value{
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wizard-input{
+  width: 300px;
+  margin-top: 10px;
+}
+
+.wizard-buttons{
+  text-align: right;
+  div{
+    display: inline-block;
+    cursor: pointer;
+    padding-right: 10px;
+  }
+}
+.wizard-back{
+  background:#000;
+  opacity:0.60;
+  position:fixed;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  z-index:5;
+  margin:0px;
+  cursor: pointer;
+}
+
+

@@ -12,18 +12,17 @@ export default class PopupSelect extends Component{
   }
 
   queryResult(){
-    let {key, value} = this.refs.select.get();
+    let key = this.refs.select.get();
     if(key !== null){
-      this.props.onEnter(key, value);
+      this.props.onEnter(key);
     }
   }
 
   componentDidMount(){
     this.keyhook = Keyhook.add({
-      '+up': () => this.refs.select.shiftCursor(-1),
-      '+down': () => this.refs.select.shiftCursor(1),
       '+enter': () => this.queryResult(),
-      '+esc': () => this.props.onCancel()
+      '+esc': () => this.props.onCancel(),
+      ...this.refs.select.keyhook
     });
   }
 
@@ -42,7 +41,7 @@ export default class PopupSelect extends Component{
         <Select 
           ref = 'select'
           options = {this.props.options}
-          onEnter = {(key, value) => this.props.onEnter(key, value)}
+          onEnter = {key => this.props.onEnter(key)}
         />
       </Popup>
     );

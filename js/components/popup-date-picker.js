@@ -14,17 +14,14 @@ export default class PopupDatePicker extends Component{
 
   componentDidMount(){
     this.keyhook = Keyhook.add({
-      '+up': () => this.refs.datePicker.slideDay(-7),
-      '+down': () => this.refs.datePicker.slideDay(7),
-      '+left': () => this.refs.datePicker.slideDay(-1),
-      '+right': () => this.refs.datePicker.slideDay(1),
       '+enter': () => this.queryResult(),
       '+esc': () => this.props.onCancel(),
       '+space': () => {
         if(this.props.nullDateEnable){
           this.props.onEnter(null);
         }
-      }
+      },
+      ...this.refs.datePicker.keyhook
     });
   }
 

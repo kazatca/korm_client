@@ -30,8 +30,8 @@ export default class Calculator extends Component{
   }
 
   get(){
-    if(typeof this.state.result !='number') return;
-    if(!this.props.validate(this.state.result)) return;
+    if(typeof this.state.result !='number') return null;
+    if(!this.props.validate(this.state.result)) return null;
     return this.state.result;
   }  
 

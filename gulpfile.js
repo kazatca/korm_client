@@ -10,7 +10,8 @@ var moduleImporter = require('sass-module-importer');
 
 var files = [
   'test-inputs',
-  'test-notify'
+  'test-notify',
+  'test-wizard'
 ];
 
 gulp.task("js", function () {

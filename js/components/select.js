@@ -22,9 +22,14 @@ export default class Select extends Component{
     cursor: null
   };
 
+  keyhook = {
+    '+up': () => this.shiftCursor(-1),
+    '+down': () => this.shiftCursor(1)
+  };
+
 
   click(key){
-    this.props.onEnter(key, this.props.options[key].name);
+    this.props.onEnter(key);
   }
 
   filter(value){
@@ -52,17 +57,18 @@ export default class Select extends Component{
     });
   }
 
-  getKey(){
+  // getKey(){
+  get(){
     if(this.state.shortList === null) return null;
     if(this.state.shortList.length == 1) return this.state.shortList[0];
     if(this.state.cursor !== null) return this.state.shortList[this.state.cursor];
     return null;
   }
 
-  get(){
-    let key = this.getKey();
-    return {key, value: key? this.props.options[key].name: null};
-  }
+  // get(){
+  //   let key = this.getKey();
+  //   return {key, value: key? this.props.options[key].name: null};
+  // }
 
   shiftCursor(dir){
     if(!this.state.shortList) return;

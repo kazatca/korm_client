@@ -12,6 +12,13 @@ class Slider extends Component{
     slide: PropTypes.func
   }
 
+  keyhook = {
+    '+up': () => this.slideDay(-7),
+    '+down': () => this.slideDay(7),
+    '+left': () => this.slideDay(-1),
+    '+right': () => this.slideDay(1)
+  };
+
   render(){
     return (
       <div className = 'slider'>
