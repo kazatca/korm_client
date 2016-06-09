@@ -15,6 +15,13 @@ class App extends Component{
     3: {name: 'Большой'}
   };
 
+  doctypes = {
+    1: {name: 'Продажа'},
+    2: {name: 'Покупка'},
+    3: {name: 'Перемещение'},
+    4: {name: 'Цена продажи'}
+  }
+
   render() {
     return (
       <div className = {'test-wizard'}>
@@ -31,8 +38,17 @@ class App extends Component{
                 format: Formats.date
               },
               {
+                title: 'Тип документа',
+                cb: input => input.select('type', this.doctypes),
+                format: index => this.doctypes[index].name
+              },
+              {
                 title: 'Склад',
-                cb: (input) => input.select('storage', this.storages),
+                cb: (input, data) => {
+                  if(data.type != 4){
+                    return input.select('storage', this.storages);
+                  }
+                },
                 format: index => this.storages[index].name
               },
               {

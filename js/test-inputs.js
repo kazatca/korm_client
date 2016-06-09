@@ -28,17 +28,26 @@ class Period extends Component{
 
 
 class Main extends Component{
+  nums = {
+     1:{name: 'Один'}, 
+     2:{name: 'Два'}, 
+     3:{name: 'Три'},
+     4:{name: 'Четыре'},
+     5:{name: 'Пять'},
+     6:{name: 'Шесть'},
+     7:{name: 'Семь'},
+     8:{name: 'Восемь'},
+     9:{name: 'Девять'},
+    10:{name: 'Десять'}
+  };
+
   render(){
     return (
       <div>
         <Period />
         <InputOption 
-          title = {'склад'}
-          options = {{
-            1:{name: 'Большой'}, 
-            2:{name: 'Маленький'}, 
-            3:{name: 'Дальний'}
-          }}
+          title = {'Число'}
+          options = {this.nums}
         />
         <InputNumber
           title = {'Сумма'}

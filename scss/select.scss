@@ -4,7 +4,10 @@
   }
 }
 
-.select-list{}
+.select-list{
+  height: 100px;
+  overflow-y:auto; 
+}
 
 .select-item{
   padding: 3px 5px;

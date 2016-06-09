@@ -17,12 +17,15 @@
 
 }
 
-.wizard-title {
+.wizard-title ,
+.wizard-step-title{
   padding: 0px;
   margin: 0px;
+  display: inline-block;
+  width: 200px;
 }
 .wizard-step-title{
-  float: right;
+  text-align: right;
 }
 
 .wizard-history,

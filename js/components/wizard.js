@@ -99,14 +99,14 @@ export default class Wizard extends Component{
 
   go(){
     let step = this.props.steps[this.step];
-    this.setState({title: step.title});
     let result = step.cb(this.inputInterfaces, this.data);
-    if(result && result.cls){
-      let {cls, key, ...props} = result;
-      this.setState({input: {cls, key, props}})
-      return;
-    }
-    if(result && result.key){
+    if(result){
+      if(result.cls){
+        let {cls, key, ...props} = result;
+        this.setState({title: step.title, input: {cls, key, props}})
+        return;
+      }
+
       this.onInputEnter(result.key, result.value);
       return;
     }
@@ -165,7 +165,6 @@ export default class Wizard extends Component{
 
   renderInput(){
     if(!this.state.input) return null;
-
     return React.createElement(this.state.input.cls, {
       ref: input => {
         this.currentInput = input;
@@ -178,10 +177,12 @@ export default class Wizard extends Component{
   render() {
     return (
       <div>
-        <div className = {'wizard-back'} />
+        <div className = {'wizard-back'} onClick = {() => this.back()}/>
         <div className = {'wizard'}>
-          <div className = {'wizard-title'}>{this.props.title}</div>
-          <div className = {'wizard-step-title'}>{this.state.title}</div>
+          <div>
+            <div className = {'wizard-title'} >{this.props.title}</div>
+            <div className = {'wizard-step-title'} >{this.state.title}</div>
+          </div>
           <div className = {'wizard-history'}>
             {this.state.history.map(({title, value}, i) => {
               return <WizardHistory key = {i} title = {title} >{value}</WizardHistory>;

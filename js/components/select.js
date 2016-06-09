@@ -18,7 +18,8 @@ export default class Select extends Component{
   };
 
   state = {
-    shortList: null,
+    searchString: '',
+    // shortList: null,
     cursor: null
   };
 
@@ -32,8 +33,8 @@ export default class Select extends Component{
     this.props.onEnter(key);
   }
 
-  filter(value){
-    var str = (value || '').toLowerCase().match(/\S+/g);
+  filter(){
+    var str = (this.state.searchString || '').toLowerCase().match(/\S+/g);
     var result = [];
     for(var key in this.props.options){
       if(!str || str.every(word => this.props.options[key].name.toLowerCase().indexOf(word)!=-1)){
@@ -49,39 +50,78 @@ export default class Select extends Component{
     return result;
   }
 
-  onChange(e){
-    if(e && e.target.value == this.state.value) return;
+  componentWillReceiveProps() {
     this.setState({
-      shortList: this.filter(e? e.target.value: ''), 
+      searchString: '',
+      cursor: null
+    });
+  }
+
+  onChange(e){
+    if(e.target.value == this.state.searchString) return;
+    this.setState({
+      searchString: e.target.value,
+      // shortList: this.filter(e? e.target.value: ''), 
       cursor: null
     });
   }
 
   // getKey(){
   get(){
-    if(this.state.shortList === null) return null;
-    if(this.state.shortList.length == 1) return this.state.shortList[0];
-    if(this.state.cursor !== null) return this.state.shortList[this.state.cursor];
+    if(this.shortList === null) return null;
+    if(this.shortList.length == 1) return this.shortList[0];
+    if(this.state.cursor !== null) return this.shortList[this.state.cursor];
     return null;
   }
 
-  // get(){
-  //   let key = this.getKey();
-  //   return {key, value: key? this.props.options[key].name: null};
-  // }
+  scrollIntoView(el){
+    var parent=ReactDOM.findDOMNode(this.refs.shortList);
+    let elRect = el.getBoundingClientRect();
+    let parentRect = parent.getBoundingClientRect();
+
+    // console.log(childTop, parentTop);
+    parent.scrollTop += elRect.top - parentRect.top + (elRect.height/2 - parentRect.height/2);
+  }
 
   shiftCursor(dir){
-    if(!this.state.shortList) return;
+    if(!this.shortList) return;
     let cursor = this.state.cursor;
     if(cursor === null && dir>0) return this.setState({cursor: 0});
     cursor += dir;
-    if(cursor<0 || cursor >= this.state.shortList.length) return;
+    if(cursor<0 || cursor >= this.shortList.length) return;
     this.setState({cursor});
+    if(this.refs.selected){
+      // setTimeout( () => {
+        let item = ReactDOM.findDOMNode(this.refs.selected)
+        this.scrollIntoView(item);
+      // }, 0);
+    }
   }
 
   componentDidMount(){
-    this.onChange();
     ReactDOM.findDOMNode(this.refs.input).focus(); 
+  }
+
+  renderItem(key, i){
+    let ops = {
+      className: 'select-item'
+    };
+    if(i == this.state.cursor){
+      ops.className += ' select-cursor';
+      ops.ref = 'selected';
+    }
+
+    return <div 
+      key = {key}
+      onClick = {this.click.bind(this, key)}
+      {...ops}
+    >{this.props.options[key].name}</div>;
+  }
+
+  renderShortList(){
+    this.shortList = this.filter();
+    if(!this.shortList) return null;
+    return this.shortList.map(this.renderItem.bind(this));
   }
 
   render(){
@@ -89,22 +129,14 @@ export default class Select extends Component{
       <div className = 'select'>
         <input 
           ref = 'input'
+          value = {this.state.searchString}
           onChange = {(e) => this.onChange(e)} 
         />
-        <div className = 'select-list'>
-          {
-            this.state.shortList !== null?
-            this.state.shortList.map((key, i) => 
-              <div 
-                key = {key} 
-                className = {'select-item' + (this.state.cursor === i ? ' select-cursor': '')}
-                onClick = {this.click.bind(this, key)} 
-              >
-              {this.props.options[key].name}
-              </div>
-            ):
-            null
-          }
+        <div 
+          ref = 'shortList'
+          className = 'select-list'
+        >
+          {this.renderShortList()}
         </div>
       </div>
     );

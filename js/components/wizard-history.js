@@ -9,8 +9,8 @@ export default class WizardHistory extends Component{
   render() {
     return (
       <div>
-        <div className = {'wizarh-history-title'}>{this.props.title}</div>
-        <div className = {'wizarh-history-value'}>{this.props.children}</div>
+        <div className = {'wizard-history-title'}>{this.props.title}</div>
+        <div className = {'wizard-history-value'}>{this.props.children}</div>
       </div>
     );
   }
