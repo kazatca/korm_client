@@ -1,0 +1,42 @@
+@import 'common';
+@import 'button';
+
+.login{
+  position:fixed;
+  background:#efef00;
+  top:50%;
+  left:50%;
+  border-radius:10px;
+  width: 156px;
+  height: 70px;
+  padding:12px;
+  margin: 0px;
+  margin-left: -79px;
+  margin-top: -38px;
+}
+
+input{
+  padding: 2px;
+  margin: 0px;
+  margin-bottom: 2px;
+  margin-left: -2px;
+}
+
+@keyframes reject {
+  0% {margin-left: -79px;}
+  25% {margin-left: -104px;}
+  75% {margin-left: -54px;}
+  100% { margin-left: -79px ;}
+}
+
+.reject{
+  animation: reject 0.7s; 
+  animation-timing-function: linear;  
+}
+
+.login-button{
+  @extend .button;
+  float: right;
+  padding: 2px;
+  margin-right: 0px;
+}

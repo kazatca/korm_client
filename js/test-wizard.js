@@ -19,7 +19,9 @@ class App extends Component{
     1: {name: 'Продажа'},
     2: {name: 'Покупка'},
     3: {name: 'Перемещение'},
-    4: {name: 'Цена продажи'}
+    4: {name: 'Цена продажи'},
+    5: {name: 'Ревизия'}
+
   }
 
   render() {

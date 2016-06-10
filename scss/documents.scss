@@ -1,0 +1,84 @@
+@import 'common';
+@import 'button';
+@import 'popup-date-picker';
+@import 'notify';
+
+.date-field{
+  display: inline-block;
+  cursor: pointer;
+}
+
+.date-field-result{
+  border: 1px solid;
+  width: 150px;
+  padding:2px;
+}
+
+.date-field-empty{
+  color: #d0d0d0;
+}
+
+.date-field-empty:before{
+  content: 'пусто'
+}
+
+.period{
+  .button{
+    margin-left: 10px;
+  }
+}
+
+
+.documents{
+  display: inline-block;
+  tr{
+    background:#F8EBBE;
+  }
+  td{
+    padding: 5px;
+    padding-left: 7px;
+  }
+}
+
+.draft{
+  cursor: pointer;
+}
+
+.month-break{
+  border-top: 1px solid;
+}
+
+.day-break{
+  border-top: 1px solid #d0d0d0;
+}
+
+.more{
+  height: 30px;
+  cursor: pointer;
+  background: #fff8df;
+  text-align: center;
+  line-height: 30px;
+  color: #bab49f;
+}
+
+.panel{
+  padding: 10px;
+  position: absolute;
+  right: 20px;
+  top: 90px;
+  background: rgba(255, 254, 156, 0.69);
+}
+
+.filter{
+  padding: 3px;
+  div {
+    padding: 2px;
+    color: #909090;
+    cursor: pointer;
+  }
+}
+
+.filter-active{
+  color: #000000 !important;
+}
+

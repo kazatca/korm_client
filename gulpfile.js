@@ -9,9 +9,12 @@ var moduleImporter = require('sass-module-importer');
 // var file = require('gulp-file');
 
 var files = [
-  'test-inputs',
-  'test-notify',
-  'test-wizard'
+  // 'test-inputs',
+  // 'test-notify',
+  // 'test-wizard',
+  // 'test-fetch',
+  // 'login',
+  'documents'
 ];
 
 gulp.task("js", function () {
@@ -26,7 +29,6 @@ gulp.task("js", function () {
       ],
       transform: ["babelify"]
     }))
-    
     .pipe(gulp.dest("./dist/js"));
 });
 

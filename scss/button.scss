@@ -1,0 +1,11 @@
+@mixin button($color){
+  background: $color;
+  border: solid 1px darken($color, 10%);
+  padding: 1px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.button{
+  @include button(#f0f0f0);
+}

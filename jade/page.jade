@@ -6,7 +6,7 @@ mixin page(name, title)
       link(rel="shortcut icon", type="image/png", href="/favicon.png")
       link(rel="stylesheet", type="text/css", href="css/vendor.css")
       link(rel="stylesheet", type="text/css", href="css/#{name}.css")
-      title
+      title= title
     body
       #app
       block
